@@ -53,32 +53,138 @@
     <h1>Eaglercraft Launcher</h1>
     <p class="subtitle">Select any client below to launch it in your browser.</p>
     <input type="text" id="search" placeholder="Search clients (e.g., 1.8, 1.12, WASM, Astra)..." />
-    <div id="status">Loading client list...</div>
+    <div id="status"></div>
     <div id="client-grid" class="grid"></div>
   </div>
 
   <script>
+    const allClients = [
+      "1.21.11 17 WASM.html",
+      "3TERN4L Client V2.1.html",
+      "ActX WASM v1.8.0.html",
+      "Alpha 1.0.1 01 JS.html",
+      "ArchMC Eaglercraft 26.2.html",
+      "ArchMC Eaglercraft 26.3.html",
+      "Archimedes Client.html",
+      "Astra 1.12.html",
+      "Astra 1.8 New.html",
+      "Astra 1.8.html",
+      "Astra JS.html",
+      "Astra WASM.html",
+      "AuraClientBeta.html",
+      "AutoClient.html",
+      "Best Hacked Minecraft No AI.html",
+      "Camo Client.html",
+      "CoderCraft.html",
+      "DeathClient 1.4.1 1.8 Intl.html",
+      "DeathClient 1.4.1 1.8 WASM.html",
+      "DragonX Client.html",
+      "DragonX Intl V6.html",
+      "DragonX Outspect.html",
+      "DragonX V4.html",
+      "EB Client Nextgen CU7.html",
+      "EVILcraft 1.21.11.html",
+      "Eagler Modpack 1.12.2 New.html",
+      "EaglerCreate fast WASM.html",
+      "EaglerForge v1 1.8 EN.html",
+      "EaglerForge v1 1.8 Intl.html",
+      "EaglerLite v1.7.2.html",
+      "Eaglercraft 1.11.2.html",
+      "Eaglercraft 1.12 EN.html",
+      "Eaglercraft 1.12 Intl.html",
+      "Eaglercraft 1.12.2 WASM.html",
+      "Eaglercraft 1.13.2 EN.html",
+      "Eaglercraft 1.14 Aether.html",
+      "Eaglercraft 1.14.4 WASM.html",
+      "Eaglercraft 1.15.2 JS EN.html",
+      "Eaglercraft 1.15.2 WASM.html",
+      "Eaglercraft 1.16 u3.html",
+      "Eaglercraft 1.17.html",
+      "Eaglercraft 1.4.7.html",
+      "Eaglercraft 26.2 Modded.html",
+      "Eaglercraft 26.2 u2.html",
+      "Eaglercraft 26.3.html",
+      "Eaglercraft Custom 1.12.2 Beta.html",
+      "Eaglercraft Explore.html",
+      "Eaglercraft IR 1.12.2 WASM.html",
+      "Eaglercraft IR 1.12.2.html",
+      "Eaglercraft IR 1.2.5.html",
+      "Eaglercraft IR 1.5.2.html",
+      "Eaglercraft IR 1.6.4.html",
+      "Eaglercraft IR 1.8.8 WASM.html",
+      "Eaglercraft IR 1.8.8.html",
+      "Eaglercraft IR PixelClient 1.8.8 WASM.html",
+      "Eaglercraft IR Winston Horror.html",
+      "Eaglercraft IR a1.2.6.html",
+      "Eaglercraft IR b1.1.html",
+      "Eaglercraft IR b1.3.html",
+      "Eaglercraft IR b1.7.3.html",
+      "Eaglercraft IR c0.30 WASM.html",
+      "Eaglercraft Lite.html",
+      "Eaglercraft Magic.html",
+      "Eaglercraft Skyfactory.html",
+      "Eaglercraft Tech.html",
+      "Eaglercraft Ultimate.html",
+      "Eaglercraft Vanilla.html",
+      "Eaglercraft WASM JSPI Explore.html",
+      "Eaglercraft WASM JSPI Lite.html",
+      "Eaglercraft WASM JSPI Magic.html",
+      "Eaglercraft WASM JSPI Skyfactory.html",
+      "Eaglercraft WASM JSPI Tech.html",
+      "Eaglercraft WASM JSPI Ultimate.html",
+      "Eaglercraft WASM JSPI Vanilla.html",
+      "Eaglercraft Weird Chest Thing.html",
+      "EaglercraftX 1.13 WASM.html",
+      "EaglercraftX 1.20.6 WASM.html",
+      "EaglercraftX 1.7.10 EN.html",
+      "EaglercraftX 1.7.10 WASM.html",
+      "EaglercraftX 1.8 EN (2).html",
+      "EaglercraftX 1.8 EN copy.html",
+      "EaglercraftX 1.8 EN.html",
+      "EaglercraftX 1.8 Intl (2).html",
+      "EaglercraftX 1.8 Intl.html",
+      "EaglercraftX 1.8 WASM.html",
+      "EaglercraftX 194.html",
+      "EaglercraftZ 1.20 u4 Beta Intl.html",
+      "EaglercraftZ 1.20u3 Intl.html",
+      "EaglercraftZ 1.20u3 WASM.html",
+      "EaglyMC u6 JS.html",
+      "EaglyMC u6 WASM.html",
+      "Eclipse WASM.html",
+      "EclipseClient 1.19 JS.html",
+      "EntropyX 1.8 WASM.html",
+      "EntropyX 1.8.html",
+      "GX Client.html",
+      "Immersive Engineering 1.12 New.html",
+      "JEI Biomes O Plenty 1.8.8.html",
+      "Justin Client.html",
+      "Kerosene Client.html",
+      "Lambda Client.html",
+      "LiquidBounce.html",
+      "Mega Client.html",
+      "Nit Client.html",
+      "Nova Client.html",
+      "Pi Client.html",
+      "Prism Client.html",
+      "RavenA NotAnOrange.html",
+      "RavenBS.html",
+      "Reborn Client.html",
+      "Solar Client.html",
+      "TungSahur1.21.11.html",
+      "UwU Client.html",
+      "WispCraft Eaglercraft 26.2 u2.html",
+      "Wurst Client.html",
+      "Zeta Client.html",
+      "clMinceraft I NotMine V6.html",
+      "demon.html",
+      "eClient 1 5 2.html",
+      "v1.0.7 JS 1.html",
+      "v1.0.7 WASM 1.html"
+    ];
+
     const statusEl = document.getElementById('status');
     const gridEl = document.getElementById('client-grid');
     const searchEl = document.getElementById('search');
-    let allClients = [];
-
-    async function loadClients() {
-      try {
-        const res = await fetch('https://github.com');
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-
-        allClients = data.tree
-          .filter(item => item.type === 'blob' && item.path.endsWith('.html') && item.path.toLowerCase() !== 'index.html')
-          .map(item => item.path)
-          .sort((a, b) => a.localeCompare(b));
-
-        renderClients(allClients);
-      } catch (err) {
-        statusEl.textContent = `Error loading clients: ${err.message}`;
-      }
-    }
 
     function renderClients(list) {
       gridEl.innerHTML = '';
@@ -99,7 +205,7 @@
       renderClients(filtered);
     });
 
-    loadClients();
+    renderClients(allClients);
   </script>
 </body>
 </html>
