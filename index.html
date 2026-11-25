@@ -89,7 +89,7 @@
 
     async function loadClients() {
       try {
-        const res = await fetch(`https://github.com{owner}/${repo}/contents/`);
+        const res = await fetch(`https://github.com`);
         if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
         const files = await res.json();
 
